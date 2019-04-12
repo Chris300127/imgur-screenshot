@@ -110,7 +110,8 @@ function notify() {
     if which growlnotify &>/dev/null; then
       growlnotify  --icon "${imgur_icon_path}" --iconpath "${imgur_icon_path}" --title "${2}" --message "${3}"
     else
-      terminal-notifier -appIcon "${imgur_icon_path}" -contentImage "${imgur_icon_path}" -title "imgur: ${2}" -message "${3}"
+      echo "success"
+      #terminal-notifier -appIcon "${imgur_icon_path}" -contentImage "${imgur_icon_path}" -title "imgur: ${2}" -message "${3}"
     fi
   else
     if [ "${1}" = "error" ]; then
@@ -331,7 +332,9 @@ function handle_upload_success() {
 
   if [ "${copy_url}" = "true" ] && [ -z "${album_title}" ]; then
     if is_mac; then
-      echo -n "${1}" | pbcopy
+      #edits made by Chris Nelson
+      #copies the image URL to the clipboard in a html <img> tag to be used in markdown notes
+      echo -n "<img src=\"${1}\" alt=\"${2}\" width=\"80%\"/>" | pbcopy
     else
       echo -n "${1}" | xclip -selection clipboard
     fi
